@@ -11,9 +11,8 @@ class Actor {
   String url_small_image;
   String imdb_code;
 
-  Actor({this.name,this.caracter_name,this.url_small_image,this.imdb_code});
+  Actor({this.name, this.caracter_name, this.url_small_image, this.imdb_code});
 
   factory Actor.fromJson(Map<String, dynamic> json) => _$ActorFromJson(json);
   Map<String, dynamic> toJson() => _$ActorToJson(this);
-}
 }

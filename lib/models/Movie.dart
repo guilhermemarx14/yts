@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:yts/models/Actor.dart';
+import 'package:yts/models/Data.dart';
+
+import 'Body.dart';
 
 part 'Movie.g.dart';
 
@@ -68,7 +73,12 @@ class Movie {
       this.large_screenshot_image3,
       this.cast});
 
-      factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);
+  factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);
   Map<String, dynamic> toJson() => _$MovieToJson(this);
-}
+
+  static getMovie() {
+    Body.getBody().then((value) {
+      print(value.data.movie.large_screenshot_image3);
+    });
+  }
 }
