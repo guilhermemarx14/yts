@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yts/view/HomePage.dart';
+import 'package:yts/views/HomePage.dart';
 import 'package:flutter/services.dart';
 
 void main() {

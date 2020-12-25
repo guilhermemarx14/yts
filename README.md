@@ -1,5 +1,5 @@
 # yts
 
-YTS mobile client to practice endpoint consumption and MobX.
+YTS mobile client to practice endpoint consumption.
 
 
