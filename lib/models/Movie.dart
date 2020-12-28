@@ -76,9 +76,9 @@ class Movie {
   factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);
   Map<String, dynamic> toJson() => _$MovieToJson(this);
 
-  static getMovie() {
-    Body.getBody().then((value) {
-      print(value.data.movie.large_screenshot_image3);
-    });
+  static Future<Movie> getMovieById(int id) async {
+    final body = await Body.getBody(id, true, true);
+
+    return body.data.movie;
   }
 }

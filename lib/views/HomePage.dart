@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yts/models/Movie.dart';
 import 'package:yts/util/constants.dart';
+import 'package:yts/views/MovieDetails.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -10,12 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    Movie.getMovie();
-    super.initState();
-  }
-
+  int id = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +26,26 @@ class _HomePageState extends State<HomePage> {
             height: 50,
           ),
         ),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (newValue) {
+                setState(() {
+                  id = int.parse(newValue);
+                });
+              },
+            ),
+          ),
+          FlatButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MovieDeatails(id)));
+              },
+              child: Text('Go to Movie'))
+        ],
       ),
     );
   }

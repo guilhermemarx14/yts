@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'dart:convert';
@@ -16,9 +17,9 @@ class Body {
   factory Body.fromJson(Map<String, dynamic> json) => _$BodyFromJson(json);
   Map<String, dynamic> toJson() => _$BodyToJson(this);
 
-  static Future<Body> getBody() async {
+  static Future<Body> getBody(int id, bool with_images, bool with_cast) async {
     final response = await http.get(
-        'https://yts.mx/api/v2/movie_details.json?movie_id=10&with_images=true&with_cast=true');
+        'https://yts.mx/api/v2/movie_details.json?movie_id=$id&with_images=$with_images&with_cast=$with_cast');
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
