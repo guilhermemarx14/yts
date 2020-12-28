@@ -39,46 +39,55 @@ class _MovieDeatailsState extends State<MovieDeatails> {
     if (movie == null)
       body = Center(child: CircularProgressIndicator());
     else
-      body = SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              Title(movie.title + ' (${movie.year})'),
-              Image.network(
-                movie.large_cover_image,
-                width: 2 / 3 * width,
-              ),
-              Title('Description'),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
-                child: Text(
-                  movie.description_full,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              Title('Screenshots'),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Image.network(
-                  movie.large_screenshot_image1,
+      body = Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              colorFilter: new ColorFilter.mode(
+                  Colors.black.withOpacity(0.2), BlendMode.dstATop),
+              image: NetworkImage(movie.background_image),
+              fit: BoxFit.cover),
+        ),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                Title(movie.title + ' (${movie.year})'),
+                Image.network(
+                  movie.large_cover_image,
                   width: 2 / 3 * width,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Image.network(
-                  movie.large_screenshot_image2,
-                  width: 2 / 3 * width,
+                Title('Description'),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
+                  child: Text(
+                    movie.description_full,
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Image.network(
-                  movie.large_screenshot_image3,
-                  width: 2 / 3 * width,
+                Title('Screenshots'),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Image.network(
+                    movie.large_screenshot_image1,
+                    width: 2 / 3 * width,
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Image.network(
+                    movie.large_screenshot_image2,
+                    width: 2 / 3 * width,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Image.network(
+                    movie.large_screenshot_image3,
+                    width: 2 / 3 * width,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
