@@ -25,6 +25,18 @@ class _MovieDeatailsState extends State<MovieDeatails> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var body;
+
+    Genres(Movie movie1) {
+      var genres = <Widget>[];
+      movie1.genres.forEach((element) {
+        genres.add(Text(element, style: TextStyle(color: Colors.white)));
+      });
+
+      return Column(
+        children: genres,
+      );
+    }
+
     Title(String title) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -51,7 +63,7 @@ class _MovieDeatailsState extends State<MovieDeatails> {
           child: Center(
             child: Column(
               children: [
-                Title(movie.title + ' (${movie.year})'),
+                Title(movie.title_long),
                 Image.network(
                   movie.large_cover_image,
                   width: 2 / 3 * width,
@@ -64,6 +76,8 @@ class _MovieDeatailsState extends State<MovieDeatails> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
+                Title('Genres'),
+                Genres(movie),
                 Title('Screenshots'),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
