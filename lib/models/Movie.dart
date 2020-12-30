@@ -81,4 +81,10 @@ class Movie {
 
     return body.data.movie;
   }
+
+  static Future<List<Movie>> getLatestMovies() async {
+    final body = await Body.getBodyLatestMovies();
+
+    return body.data.movies;
+  }
 }

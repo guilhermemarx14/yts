@@ -11,9 +11,89 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int id = -1;
+  List<Movie> movies;
+  @override
+  void initState() {
+    Movie.getLatestMovies().then((value) {
+      setState(() {
+        movies = value;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var body;
+
+    Title(String title) {
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: ytsGreen,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
+
+    MovieShow(Movie movie) {
+      return GestureDetector(
+        onTap: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => MovieDeatails(movie.id))),
+        child: Column(
+          children: [
+            Title(movie.title_long),
+            Container(
+              padding: EdgeInsets.all(8.0),
+              decoration: new BoxDecoration(
+                borderRadius: new BorderRadius.circular(16.0),
+                color: Colors.white,
+              ),
+              child: Image.network(
+                movie.large_cover_image,
+                width: 2 / 3 * width,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (movies == null)
+      body = Center(child: CircularProgressIndicator());
+    else
+      body = SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Most recent movies',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: ytsGreen,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              MovieShow(movies[0]),
+              MovieShow(movies[1]),
+              MovieShow(movies[2]),
+              MovieShow(movies[3]),
+              MovieShow(movies[4]),
+            ],
+          ),
+        ),
+      );
+
     return Scaffold(
       backgroundColor: background,
       appBar: PreferredSize(
@@ -27,26 +107,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextField(
-              onChanged: (newValue) {
-                setState(() {
-                  id = int.parse(newValue);
-                });
-              },
-            ),
-          ),
-          FlatButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MovieDeatails(id)));
-              },
-              child: Text('Go to Movie'))
-        ],
-      ),
+      body: body,
     );
   }
 }

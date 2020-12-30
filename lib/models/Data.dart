@@ -11,7 +11,7 @@ part 'Data.g.dart';
 @JsonSerializable()
 class Data {
   Movie movie;
-
+  List<Movie> movies;
   Data({this.movie});
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);

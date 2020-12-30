@@ -42,8 +42,12 @@ class _MovieDeatailsState extends State<MovieDeatails> {
         padding: const EdgeInsets.all(16.0),
         child: Text(
           title,
+          textAlign: TextAlign.center,
           style: TextStyle(
-              color: ytsGreen, fontSize: 25, fontWeight: FontWeight.bold),
+            color: ytsGreen,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       );
     }
@@ -64,9 +68,16 @@ class _MovieDeatailsState extends State<MovieDeatails> {
             child: Column(
               children: [
                 Title(movie.title_long),
-                Image.network(
-                  movie.large_cover_image,
-                  width: 2 / 3 * width,
+                Container(
+                  padding: EdgeInsets.all(8.0),
+                  decoration: new BoxDecoration(
+                    borderRadius: new BorderRadius.circular(16.0),
+                    color: Colors.white,
+                  ),
+                  child: Image.network(
+                    movie.large_cover_image,
+                    width: 2 / 3 * width,
+                  ),
                 ),
                 Title('Description'),
                 Padding(

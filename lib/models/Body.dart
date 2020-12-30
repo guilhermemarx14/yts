@@ -31,4 +31,19 @@ class Body {
       throw Exception('Failed to load album');
     }
   }
+
+  static Future<Body> getBodyLatestMovies() async {
+    final response = await http.get(
+        'https://yts.mx/api/v2/list_movies.json?sort_by=year&limit=5&order_by=desc');
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return Body.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
+  }
 }
