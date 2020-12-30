@@ -12,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Movie> movies;
+  String title;
   @override
   void initState() {
     Movie.getLatestMovies().then((value) {
@@ -19,12 +20,14 @@ class _HomePageState extends State<HomePage> {
         movies = value;
       });
     });
+    title = 'Most recent movies';
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     var body;
 
     Title(String title) {
@@ -51,8 +54,8 @@ class _HomePageState extends State<HomePage> {
             Title(movie.title_long),
             Container(
               padding: EdgeInsets.all(8.0),
-              decoration: new BoxDecoration(
-                borderRadius: new BorderRadius.circular(16.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
                 color: Colors.white,
               ),
               child: Image.network(
@@ -67,33 +70,33 @@ class _HomePageState extends State<HomePage> {
 
     if (movies == null)
       body = Center(child: CircularProgressIndicator());
-    else
-      body = SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Most recent movies',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: ytsGreen,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              MovieShow(movies[0]),
-              MovieShow(movies[1]),
-              MovieShow(movies[2]),
-              MovieShow(movies[3]),
-              MovieShow(movies[4]),
-            ],
+    else {
+      var allMovies = <Widget>[];
+
+      allMovies.add(
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: ytsGreen,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       );
 
+      movies.forEach((element) => allMovies.add(MovieShow(element)));
+      body = SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: allMovies,
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: background,
       appBar: PreferredSize(
@@ -108,6 +111,31 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: body,
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Container(
+              height: height,
+              decoration: BoxDecoration(
+                color: background,
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Title('Browse movies'),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    title: Title('Upcoming Movies'),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
