@@ -28,13 +28,13 @@ class Body {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load movie');
     }
   }
 
   static Future<Body> getBodyLatestMovies() async {
-    final response = await http.get(
-        'https://yts.mx/api/v2/list_movies.json?sort_by=year&limit=5&order_by=desc');
+    final response =
+        await http.get('https://yts.mx/api/v2/list_movies.json?limit=5');
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
@@ -43,7 +43,37 @@ class Body {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load movies');
+    }
+  }
+
+  static Future<Body> getBodyUpcomingMovies() async {
+    final response = await http.get('https://yts.mx/api/v2/list_upcoming.json');
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return Body.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load movies');
+    }
+  }
+
+  static Future<Body> getBodyQueryMovies(int page, String quality,
+      int minimum_rating, String query_term, String genre) async {
+    final response = await http.get(
+        'https://yts.mx/api/v2/list_movies.json?limit=10&page=$page&quality=$quality&minimum_rating=$minimum_rating&query_term=$query_term&genre=$genre');
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return Body.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load movies');
     }
   }
 }

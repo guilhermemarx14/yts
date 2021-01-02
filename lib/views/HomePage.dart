@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yts/models/Movie.dart';
 import 'package:yts/util/constants.dart';
+import 'package:yts/views/BrowsePage.dart';
 import 'package:yts/views/MovieDetails.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
         movies = value;
       });
     });
-    title = 'Most recent movies';
+    title = 'Most Recent Movies';
     super.initState();
   }
 
@@ -28,6 +29,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+
+    bool selectedMostRecent = title == 'Most Recent Movies';
+    bool selectedUpcoming = title == 'Upcoming Movies';
     var body;
 
     Title(String title) {
@@ -123,12 +127,48 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   ListTile(
-                    title: Title('Browse movies'),
-                    onTap: () {},
+                    title: Title('Most Recent Movies'),
+                    onTap: () {
+                      setState(() {
+                        title = 'Most Recent Movies';
+                        movies = null;
+                        body = null;
+                        Movie.getLatestMovies().then((value) {
+                          setState(() {
+                            movies = value;
+                          });
+                        });
+                        title = 'Most Recent Movies';
+                      });
+                    },
+                    selected: selectedMostRecent,
+                    selectedTileColor: appBarBackground,
+                  ),
+                  ListTile(
+                    title: Title('Browse Movies'),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BrowsePage()));
+                    },
                   ),
                   ListTile(
                     title: Title('Upcoming Movies'),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        title = 'Upcoming Movies';
+                        movies = null;
+                        body = null;
+                        Movie.getUpcomingMovies().then((value) {
+                          setState(() {
+                            movies = value;
+                          });
+                        });
+                      });
+                    },
+                    selected: selectedUpcoming,
+                    selectedTileColor: appBarBackground,
                   ),
                 ],
               ),

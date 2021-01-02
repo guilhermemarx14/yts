@@ -87,4 +87,18 @@ class Movie {
 
     return body.data.movies;
   }
+
+  static Future<List<Movie>> getUpcomingMovies() async {
+    final body = await Body.getBodyUpcomingMovies();
+
+    return body.data.movies;
+  }
+
+  static Future<Data> getQueryMovies(int page, String quality,
+      int minimum_rating, String query_term, String genre) async {
+    final body = await Body.getBodyQueryMovies(
+        page, quality, minimum_rating, query_term, genre);
+
+    return body.data;
+  }
 }
