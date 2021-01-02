@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:yts/models/Data.dart';
 import 'package:yts/models/Movie.dart';
 import 'package:yts/util/constants.dart';
@@ -221,9 +222,11 @@ class _BrowsePageState extends State<BrowsePage> {
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
           automaticallyImplyLeading: false,
-          leading: IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () => Scaffold.of(context).openDrawer(),
+          leading: Builder(
+            builder: (BuildContext context) => IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
           ),
           backgroundColor: appBarBackground,
           title: Image.asset(
@@ -245,46 +248,15 @@ class _BrowsePageState extends State<BrowsePage> {
               ),
               child: Column(
                 children: [
-                  ListTile(
-                    title: Title('Most Recent Movies'),
-                    onTap: () {
-                      setState(() {
-                        title = 'Most Recent Movies';
-                        movies = null;
-                        body = null;
-                        Movie.getLatestMovies().then((value) {
-                          setState(() {
-                            movies = value;
-                          });
-                        });
-                        title = 'Most Recent Movies';
-                      });
-                    },
-                    selectedTileColor: appBarBackground,
+                  SizedBox(
+                    height: 15,
                   ),
-                  ListTile(
-                    title: Title('Browse Movies'),
-                    onTap: () {
-                      setState(() {
-                        title = 'Browse Movies';
-                      });
-                    },
-                  ),
-                  ListTile(
-                    title: Title('Upcoming Movies'),
-                    onTap: () {
-                      setState(() {
-                        title = 'Upcoming Movies';
-                        movies = null;
-                        body = null;
-                        Movie.getUpcomingMovies().then((value) {
-                          setState(() {
-                            movies = value;
-                          });
-                        });
-                      });
-                    },
-                    selectedTileColor: appBarBackground,
+                  TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Search',
+                      labelStyle: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
